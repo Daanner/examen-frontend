@@ -1,1 +1,170 @@
-<p>empleados works!</p>
+<div class="min-h-screen bg-[#FDFDFC] dark:bg-[#0a0a0a] p-6 lg:p-8">
+  <div class="w-full max-w-7xl mx-auto">
+    <!-- Header -->
+    <header class="mb-6">
+        <h1 class="text-3xl font-medium text-[#1b1b18] dark:text-[#EDEDEC] mb-2">
+        Examen Frontend Angular - Kevin Flores
+      </h1>
+      <h1 class="text-3xl font-medium text-[#1b1b18] dark:text-[#EDEDEC] mb-2">
+        Gestión de Empleados
+      </h1>
+      <p class="text-[#706f6c] dark:text-[#A1A09A]">
+        Administra la información de los empleados de tu empresa
+      </p>
+    </header>
+
+    <!-- Mensaje de notificación -->
+    <div
+      *ngIf="mensaje"
+      class="mb-6 p-4 bg-[#fff2f2] dark:bg-[#1D0002] text-[#F53003] dark:text-[#FF4433] rounded-sm border border-[#f53003] dark:border-[#FF4433] shadow-[0px_0px_1px_0px_rgba(0,0,0,0.03),0px_1px_2px_0px_rgba(0,0,0,0.06)]"
+    >
+      {{ mensaje }}
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-6">
+      <!-- Formulario -->
+      <div class="lg:w-1/3">
+        <div class="bg-white dark:bg-[#161615] rounded-lg shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d] overflow-hidden">
+          <div class="p-6 border-b border-[#e3e3e0] dark:border-[#3E3E3A]">
+            <h2 class="text-lg font-medium text-[#1b1b18] dark:text-[#EDEDEC]">
+              Agregar Nuevo Empleado
+            </h2>
+          </div>
+          
+          <div class="p-6">
+            <form (ngSubmit)="crearEmpleado()" class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-[#1b1b18] dark:text-[#EDEDEC] mb-2">
+                  Nombre
+                </label>
+                <input
+                  type="text"
+                  [(ngModel)]="nuevoEmpleado.nombre"
+                  name="nombre"
+                  required
+                  class="w-full px-4 py-2 bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] dark:text-[#EDEDEC] border border-[#e3e3e0] dark:border-[#3E3E3A] rounded-sm focus:outline-none focus:border-[#F53003] dark:focus:border-[#FF4433] transition-colors"
+                  placeholder="Juan"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-[#1b1b18] dark:text-[#EDEDEC] mb-2">
+                  Apellido
+                </label>
+                <input
+                  type="text"
+                  [(ngModel)]="nuevoEmpleado.apellido"
+                  name="apellido"
+                  required
+                  class="w-full px-4 py-2 bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] dark:text-[#EDEDEC] border border-[#e3e3e0] dark:border-[#3E3E3A] rounded-sm focus:outline-none focus:border-[#F53003] dark:focus:border-[#FF4433] transition-colors"
+                  placeholder="Pérez"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-[#1b1b18] dark:text-[#EDEDEC] mb-2">
+                  Correo
+                </label>
+                <input
+                  type="email"
+                  [(ngModel)]="nuevoEmpleado.correo"
+                  name="correo"
+                  required
+                  class="w-full px-4 py-2 bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] dark:text-[#EDEDEC] border border-[#e3e3e0] dark:border-[#3E3E3A] rounded-sm focus:outline-none focus:border-[#F53003] dark:focus:border-[#FF4433] transition-colors"
+                  placeholder="juan@example.com"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-[#1b1b18] dark:text-[#EDEDEC] mb-2">
+                  Salario
+                </label>
+                <input
+                  type="number"
+                  [(ngModel)]="nuevoEmpleado.salario"
+                  name="salario"
+                  step="0.01"
+                  required
+                  class="w-full px-4 py-2 bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] dark:text-[#EDEDEC] border border-[#e3e3e0] dark:border-[#3E3E3A] rounded-sm focus:outline-none focus:border-[#F53003] dark:focus:border-[#FF4433] transition-colors"
+                  placeholder="0.00"
+                />
+              </div>
+
+              <button
+                type="submit"
+                class="w-full px-5 py-2.5 bg-[#1b1b18] dark:bg-[#eeeeec] text-white dark:text-[#1C1C1A] border border-black dark:border-[#eeeeec] rounded-sm hover:bg-black dark:hover:bg-white hover:border-black dark:hover:border-white transition-all font-medium"
+              >
+                Guardar Empleado
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabla -->
+      <div class="lg:w-2/3">
+        <div class="bg-white dark:bg-[#161615] rounded-lg shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d] overflow-hidden">
+          <div class="p-6 border-b border-[#e3e3e0] dark:border-[#3E3E3A]">
+            <h2 class="text-lg font-medium text-[#1b1b18] dark:text-[#EDEDEC]">
+              Lista de Empleados
+            </h2>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead class="bg-[#FDFDFC] dark:bg-[#0a0a0a]">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-[#706f6c] dark:text-[#A1A09A] uppercase tracking-wider border-b border-[#e3e3e0] dark:border-[#3E3E3A]">
+                    ID
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-[#706f6c] dark:text-[#A1A09A] uppercase tracking-wider border-b border-[#e3e3e0] dark:border-[#3E3E3A]">
+                    Nombre
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-[#706f6c] dark:text-[#A1A09A] uppercase tracking-wider border-b border-[#e3e3e0] dark:border-[#3E3E3A]">
+                    Apellido
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-[#706f6c] dark:text-[#A1A09A] uppercase tracking-wider border-b border-[#e3e3e0] dark:border-[#3E3E3A]">
+                    Correo
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-[#706f6c] dark:text-[#A1A09A] uppercase tracking-wider border-b border-[#e3e3e0] dark:border-[#3E3E3A]">
+                    Salario
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#e3e3e0] dark:divide-[#3E3E3A]">
+                <tr
+                  *ngFor="let empleado of empleados"
+                  class="hover:bg-[#FDFDFC] dark:hover:bg-[#0a0a0a] transition-colors"
+                >
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-[#1b1b18] dark:text-[#EDEDEC]">
+                    {{ empleado.id }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-[#1b1b18] dark:text-[#EDEDEC]">
+                    {{ empleado.nombre }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-[#1b1b18] dark:text-[#EDEDEC]">
+                    {{ empleado.apellido }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-[#706f6c] dark:text-[#A1A09A]">
+                    {{ empleado.correo }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#F53003] dark:text-[#FF4433]">
+                    ${{ empleado.salario | number:'1.2-2' }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div
+              *ngIf="empleados.length === 0"
+              class="p-12 text-center text-[#706f6c] dark:text-[#A1A09A]"
+            >
+              <p class="text-lg">No hay empleados registrados</p>
+              <p class="text-sm mt-2">Agrega tu primer empleado usando el formulario</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
